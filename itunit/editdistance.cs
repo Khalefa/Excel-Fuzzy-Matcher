@@ -14,9 +14,6 @@ namespace ConsoleApplication3
         /// </summary>
         public static int Compute(string s, string t)
         {
-            s = s.Trim();
-            t = t.Trim();
-
             int n = s.Length;
             int m = t.Length;
             int[,] d = new int[n + 1, m + 1];
