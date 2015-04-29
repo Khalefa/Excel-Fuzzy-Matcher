@@ -14,6 +14,9 @@ namespace ConsoleApplication3
         /// </summary>
         public static int Compute(string s, string t)
         {
+            s = s.Trim();
+            t = t.Trim();
+
             int n = s.Length;
             int m = t.Length;
             int[,] d = new int[n + 1, m + 1];
@@ -112,6 +115,38 @@ namespace ConsoleApplication3
             // Step 7
             return d[n, m];
         }
-       
+        public static float FuzzyCompute(string a, string b, int limit)
+        {
+            var A=a.Split(' ');
+            var B = b.Split(' ');
+            if (A.Count() > B.Count())
+            {
+                var C = A;
+                A = B;
+                B = C;
+            }
+            int i=0;
+            int j=0;
+            float dist=0;
+            for( ;i<A.Count();i++){
+                string si=A[i].Arabic();
+                string sj=B[j].Arabic();
+                int x = EditDistance.Compute(A[i].Arabic(), B[i].Arabic());
+                if (x > 0.5 * Math.Min(si.Length, sj.Length))
+                {
+                    j++;
+                    
+                }
+                else
+                {
+                    
+                    j++;
+                    i++;
+                }
+                dist+=x;
+                if (dist > limit) return dist;
+            }
+            return dist;
+        } 
     }
 }

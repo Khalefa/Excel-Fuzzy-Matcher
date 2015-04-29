@@ -8,9 +8,18 @@ namespace ConsoleApplication3
 {
     class Program
     {
+        public class Match
+        {
+            public string s;
+            public  string s1;
+            public float match;
+        }
         static void Main(string[] args)
         {
-            string dir = @"C:\Users\khalefa\Documents\Visual Studio 2012\Projects\ConsoleApplication3\ConsoleApplication3\bin\Debug\";
+            List<Match> exact = new List<Match>();
+            List<Match> semiexact = new List<Match>();
+            List<Match> noexact = new List<Match>();
+            string dir = @"C:\Users\khalefa\Documents\Visual Studio 2012\Projects\itunit\itunit\bin\Debug\";
             ExcelUtil e = new ExcelUtil();
 
             e.openexcel(dir + "cs.xls");
@@ -21,15 +30,16 @@ namespace ConsoleApplication3
             for (int i=0;i<n1.Length;i++)
             {
                 string s1=((string)n1[i]).Trim();
-                int m = int.MaxValue;
+                float m = int.MaxValue;
                 string s="";
                 for(int j=0;j<n2.Length;j++)
                 {
                     string s2=((string)n2[j]).Trim();
-                    int ed=EditDistance.Compute(s1, s2, 10);
-                    if (ed < m)
+                    float edn=EditDistance.FuzzyCompute(s1.Arabic(), s2.Arabic(), 10);
+                    //int ed = EditDistance.Compute(s1, s2, 10);
+                    if (edn < m)
                     {
-                        m = ed;
+                        m = edn;
                         s = s2;
                     }
                     
