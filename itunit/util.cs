@@ -8,28 +8,51 @@ namespace ConsoleApplication3
 {
     static class util
     {/*
-       set ret= replace(ret,'إ','ا');
-set ret= replace(ret,'آ','ا');
-set ret= replace(ret,'أ','ا');
-set ret= replace(ret,'اا','ا');
-set ret= replace(ret,'إ','ا');
-set ret= replace(ret,'ي','ى');
-set ret= replace(ret,'ه','ة');
-set ret= replace(ret,'ة','ة');
         */
-
-        
-
-            public static T[] Slice<T>(this T[,] arr, int d)
+        public static string Space(this string x)
+        {
+            string s = "";
+            bool inspace=false;
+            for (int i = 0; i < x.Length; i++)
             {
-                List<T>  x=new List<T>();
-                for(int i=1;i<arr.GetLength(0);i++)
-                    if(arr[i,d] !=null)
+                if (x[i] == ' ')
+                {
+                    if (inspace) continue;
+                    else
                     {
-                        x.Add(arr[i,d]);
+                        inspace = true;
                     }
-                return x.ToArray();
+
+                }
+                else inspace = false;
+                s = s + x[i];
             }
-       
+            return s;
+        }
+        public static string Arabic(this string x)
+        {
+            String m = x.Replace('إ', 'ا');
+            m = m.Replace('آ', 'ا');
+            m = m.Replace('أ', 'ا');
+            //m=m.Replace( 'اا','ا');
+            m = m.Replace('إ', 'ا');
+            m = m.Replace('ي', 'ى');
+            m = m.Replace('ه', 'ة');
+            m = m.Replace('ة', 'ة');
+
+            return m;
+        }
+        
+        public static T[] Slice<T>(this T[,] arr, int d)
+        {
+            List<T> x = new List<T>();
+            for (int i = 1; i < arr.GetLength(0); i++)
+                if (arr[i, d] != null)
+                {
+                    x.Add(arr[i, d]);
+                }
+            return x.ToArray();
+        }
+
     }
 }
