@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication3
+namespace Matching
 {
 
     static class EditDistance
@@ -131,19 +131,17 @@ namespace ConsoleApplication3
                 int x = EditDistance.Compute(A[i].Arabic(), B[i].Arabic());
                 if (x > 0.5 * Math.Min(si.Length, sj.Length))
                 {
-                    j++;
-                    
+                    j++;                    
                 }
                 else
-                {
-                    
+                {                    
                     j++;
                     i++;
                 }
                 dist+=x;
-                if (dist > limit) return dist;
+                if (dist > limit) return dist/ Math.Min(a.Length, b.Length);
             }
-            return dist;
+            return dist / Math.Min(a.Length, b.Length);
         } 
     }
 }
