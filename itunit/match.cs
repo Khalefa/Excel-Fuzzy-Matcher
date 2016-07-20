@@ -22,7 +22,7 @@ namespace Matching
     }
     static class Matching
     {
-        static public List<Match> Matches(string dir, string stud, string mis)
+        static public List<Match> Matches(string stud, string mis, int id = 3, int id2 = 2)
         {
             /*            List<Match> exact = new List<Match>();
                         List<Match> semiexact = new List<Match>();
@@ -33,11 +33,11 @@ namespace Matching
             ExcelUtil e = new ExcelUtil();
             ExcelUtil f = new ExcelUtil();
 
-            e.openexcel(dir + stud);
-            f.openexcel(dir + mis);
+            e.openexcel(stud);
+            f.openexcel(mis);
 
-            var n1 = e.valueArray.Slice(3);
-            var n2 = f.valueArray.Slice(2);
+            var n1 = e.valueArray.Slice(id);
+            var n2 = f.valueArray.Slice(id2);
             for (int i = 0; i < n1.Length; i++)
             {
                 string s1 = ((string)n1[i]).Trim();

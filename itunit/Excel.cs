@@ -26,14 +26,14 @@ namespace Matching
         }
         int Color(Match m)
         {
-            int c=0;
+            int c = 0;
             if (m.type == matchtype.Exact)
                 c = ConvertColour(255, 255, 1);
             else
                 if (m.type == matchtype.SemiMatch)
-                    c = ConvertColour(124, 185, 232);
-                else if (m.type == matchtype.NoMatch)
-                    c = ConvertColour(232, 123, 166);
+                c = ConvertColour(124, 185, 232);
+            else if (m.type == matchtype.NoMatch)
+                c = ConvertColour(232, 123, 166);
             return c;
         }
         public void openexcel(string fileName)
@@ -50,19 +50,19 @@ namespace Matching
             Range excelRange = worksheet.UsedRange;
 
             //get an object array of all of the cells in the worksheet (their values)
-             valueArray = (object[,])excelRange.get_Value(
-                        XlRangeValueDataType.xlRangeValueDefault);
-           /* for (int row = 1; row <= worksheet.UsedRange.Rows.Count; ++row)
-            {
-                for (int col = 1; col <= worksheet.UsedRange.Columns.Count; ++col)
-                {
-                    //access each cell
-                    //Debug.Print(valueArray[row, col].ToString());
-                    if (valueArray[row, col] != null)
-                        Console.WriteLine(valueArray[row, col].ToString());
-                }
-            }
-            */
+            valueArray = (object[,])excelRange.get_Value(
+                       XlRangeValueDataType.xlRangeValueDefault);
+            /* for (int row = 1; row <= worksheet.UsedRange.Rows.Count; ++row)
+             {
+                 for (int col = 1; col <= worksheet.UsedRange.Columns.Count; ++col)
+                 {
+                     //access each cell
+                     //Debug.Print(valueArray[row, col].ToString());
+                     if (valueArray[row, col] != null)
+                         Console.WriteLine(valueArray[row, col].ToString());
+                 }
+             }
+             */
             //clean up stuffs
             workbook.Close(false, Type.Missing, Type.Missing);
             //      Marshal.ReleaseComObject(workbook);
@@ -79,25 +79,26 @@ namespace Matching
             object misValue = System.Reflection.Missing.Value;
 
             Workbook workbook = _excelApp.Workbooks.Add(misValue);
-            Worksheet        
+            Worksheet
             worksheet = (Worksheet)workbook.Worksheets.get_Item(1);
-            
 
-            
-            int column=1;
-            int row=1;
-            foreach(Match m in data){
-            var cell = (Range)worksheet.Cells[row, column];
-            cell.Value2 = m.A;
 
-            cell.Interior.Color = Color(m);
-            if (m.type != matchtype.NoMatch)
+
+            int column = 1;
+            int row = 1;
+            foreach (Match m in data)
             {
-                cell = (Range)worksheet.Cells[row, column + 1];
-                cell.Value2 = m.B;
+                var cell = (Range)worksheet.Cells[row, column];
+                cell.Value2 = m.A;
+
                 cell.Interior.Color = Color(m);
-            }
-            row++;
+                if (m.type != matchtype.NoMatch)
+                {
+                    cell = (Range)worksheet.Cells[row, column + 1];
+                    cell.Value2 = m.B;
+                    cell.Interior.Color = Color(m);
+                }
+                row++;
             }
             //workbook.Save();
             //clean up stuffs
@@ -105,8 +106,8 @@ namespace Matching
             workbook.SaveAs(fileName, XlFileFormat.xlWorkbookNormal, misValue,
                 misValue, misValue, misValue, XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
             workbook.Close(true, misValue, misValue);
-            
-            _excelApp.Quit();            
+
+            _excelApp.Quit();
         }
     }
 }

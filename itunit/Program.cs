@@ -10,16 +10,51 @@ namespace Matching
 {
     class Program
     {
-   
+  static void  printUsage()
+        {
+            Console.WriteLine("Match <first excel> <column> <second excel> <column> ");
+        }
             static void Main(string[] args)
         {
+            if (args.Length != 4)
+            {
+                printUsage();
+                return;
+            }
+            // string dir= @"C:\Users\khalefa\Downloads\itunit-master\itunit-master\";
+          //  Console.WriteLine(args[1]);//return;
+          
+            string n = args[0];
+            string m = args[2];
+            int col1 = int.Parse(args[1]);
+            int col2 = int.Parse(args[3]);
+            //get the dir
+            string dir = "";
+            if (n.Contains("\\"))
+            {
+                dir = n.Substring(0,n.LastIndexOf("\\"));
+                dir = dir + "\\";
+            }
+            else
+             if (n.Contains("/"))
+            {
+                dir = n.Substring(0,n.LastIndexOf("/"));
+                dir = dir + "/";
 
-            string dir=@"C:\Users\khalefa\Documents\Visual Studio 2012\Projects\itunit\itunit\bin\Debug\";
-            string n = "cs.xls";
-            string m = "cs_mis.xls";
-            var x=Matching.Matches(dir, n, m);
+            }
+            else
+
+            {
+                dir = System.AppDomain.CurrentDomain.BaseDirectory;
+                n = dir + n;
+                m = dir + m;
+            }
+            Console.Write(dir);
+           // return;
+            var x = Matching.Matches( n,  m, col1, col2);
             ExcelUtil e = new ExcelUtil();
-            e.writeexcel(dir+"a.xlsx", x);
+            //System.IO.Path p=new System.IO.Path()
+            e.writeexcel(System.AppDomain.CurrentDomain.BaseDirectory + "output.xls", x);
         }
     }
 
